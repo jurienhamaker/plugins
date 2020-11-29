@@ -34,45 +34,54 @@ exports.createHttpMethodDecorator = createHttpMethodDecorator;
  * @since 1.0.0
  * @param route The route on which this method should answer.
  */
-exports.HttpGet = (route) => createHttpMethodDecorator("GET" /* GET */, route);
+const HttpGet = (route) => createHttpMethodDecorator("GET" /* GET */, route);
+exports.HttpGet = HttpGet;
 /**
  * @since 1.0.0
  * @param route The route on which this method should answer.
  */
-exports.HttpHead = (route) => createHttpMethodDecorator("HEAD" /* HEAD */, route);
+const HttpHead = (route) => createHttpMethodDecorator("HEAD" /* HEAD */, route);
+exports.HttpHead = HttpHead;
 /**
  * @since 1.0.0
  * @param route The route on which this method should answer.
  */
-exports.HttpPost = (route) => createHttpMethodDecorator("POST" /* POST */, route);
+const HttpPost = (route) => createHttpMethodDecorator("POST" /* POST */, route);
+exports.HttpPost = HttpPost;
 /**
  * @since 1.0.0
  * @param route The route on which this method should answer.
  */
-exports.HttpPut = (route) => createHttpMethodDecorator("PUT" /* PUT */, route);
+const HttpPut = (route) => createHttpMethodDecorator("PUT" /* PUT */, route);
+exports.HttpPut = HttpPut;
 /**
  * @since 1.0.0
  * @param route The route on which this method should answer.
  */
-exports.HttpDelete = (route) => createHttpMethodDecorator("DELETE" /* DELETE */, route);
+const HttpDelete = (route) => createHttpMethodDecorator("DELETE" /* DELETE */, route);
+exports.HttpDelete = HttpDelete;
 /**
  * @since 1.0.0
  * @param route The route on which this method should answer.
  */
-exports.HttpConnect = (route) => createHttpMethodDecorator("CONNECT" /* CONNECT */, route);
+const HttpConnect = (route) => createHttpMethodDecorator("CONNECT" /* CONNECT */, route);
+exports.HttpConnect = HttpConnect;
 /**
  * @since 1.0.0
  * @param route The route on which this method should answer.
  */
-exports.HttpOptions = (route) => createHttpMethodDecorator("OPTIONS" /* OPTIONS */, route);
+const HttpOptions = (route) => createHttpMethodDecorator("OPTIONS" /* OPTIONS */, route);
+exports.HttpOptions = HttpOptions;
 /**
  * @since 1.0.0
  * @param route The route on which this method should answer.
  */
-exports.HttpTrace = (route) => createHttpMethodDecorator("TRACE" /* TRACE */, route);
+const HttpTrace = (route) => createHttpMethodDecorator("TRACE" /* TRACE */, route);
+exports.HttpTrace = HttpTrace;
 /**
  * @since 1.0.0
  * @param route The route on which this method should answer.
  */
-exports.HttpPatch = (route) => createHttpMethodDecorator("PATCH" /* PATCH */, route);
+const HttpPatch = (route) => createHttpMethodDecorator("PATCH" /* PATCH */, route);
+exports.HttpPatch = HttpPatch;
 //# sourceMappingURL=HttpMethods.js.map

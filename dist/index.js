@@ -18,5 +18,6 @@ __exportStar(require("./lib/structures/api/CookieStore"), exports);
 __exportStar(require("./lib/structures/http/HttpMethods"), exports);
 __exportStar(require("./lib/structures/http/Server"), exports);
 __exportStar(require("./lib/utils/Mime"), exports);
-exports.main = () => 'this builds and pushes';
+const main = () => 'this builds and pushes';
+exports.main = main;
 //# sourceMappingURL=index.js.map
