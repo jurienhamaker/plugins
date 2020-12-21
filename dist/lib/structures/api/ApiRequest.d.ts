@@ -1,21 +1,26 @@
 /// <reference types="node" />
 import { IncomingMessage } from 'http';
-export interface UserAuthObject {
-    token: string;
-    refresh: string;
-    user_id: string;
-    expires: number;
-}
+import type { AuthData } from '../http/Auth';
 export declare class ApiRequest extends IncomingMessage {
-}
-export interface ApiRequest {
-    originalUrl: string;
-    path: string;
-    search: string;
+    /**
+     * The query parameters.
+     */
     query: Record<string, string | string[]>;
+    /**
+     * The URI parameters.
+     */
     params: Record<string, string>;
-    body?: any;
-    length?: number;
-    auth?: UserAuthObject;
+    /**
+     * The body that was sent by the user.
+     */
+    body?: unknown;
+    /**
+     * The authorization information. This field indicates three possible values:
+     *
+     * - `undefined`: The authorization middleware has not been executed yet.
+     * - `null`: The user is not authorized.
+     * - `AuthData`: The user is authorized.
+     */
+    auth?: AuthData | null;
 }
 //# sourceMappingURL=ApiRequest.d.ts.map

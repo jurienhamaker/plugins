@@ -1,35 +1,58 @@
 import { BasePiece } from '@sapphire/framework';
-import { Collection } from 'discord.js';
-import { kRoutePathCacheSymbol } from '../Api';
-import type { RouteCacheDefinition } from '../decorators/HttpMethods';
-import { ParsedPart } from '../utils/pathParsing';
-import type { Methods } from './http/HttpMethods';
 import type { PieceContext, PieceOptions } from '@sapphire/pieces';
+import type { Awaited } from '@sapphire/utilities';
+import { Collection } from 'discord.js';
+import { RouteData } from '../utils/RouteData';
+import { Methods } from './http/HttpMethods';
+import type { MethodCallback } from './RouteStore';
 /**
  * @since 1.0.0
  */
 export declare abstract class Route extends BasePiece {
     /**
-     * @since 1.0.0
+     * (RFC 7230 3.3.2) The maximum decimal number of octets.
      */
-    route: string;
+    readonly maximumBodyLength: number;
     /**
-     * @since 1.0.0
+     * The route information.
      */
-    $internalRoutingTable: Collection<Methods, [string, ParsedPart[]][]>;
+    readonly router: RouteData;
     /**
-     * Internal route remains empty until either the store fills it from piece options or the decorator sets it.
-     * Its main function is acting as the main route for the DEFAULT HttpMethod decorators.
-     * OR as the base route for decorator defined sub routes.
-     * @protected
-     * @since 1.0.0
+     * The methods this route accepts.
      */
-    protected $internalRoute: string;
-    constructor(context: PieceContext, { name, ...options }?: PieceOptions);
-    matchRoute(method: Methods, split: string[]): string;
+    readonly methods: Collection<Methods, MethodCallback>;
+    constructor(context: PieceContext, options?: RouteOptions);
     /**
-     * @since 1.0.0
+     * Per-piece listener that is called when the piece is loaded into the store.
+     * Useful to set-up asynchronous initialization tasks.
      */
-    static [kRoutePathCacheSymbol]: RouteCacheDefinition[];
+    onLoad(): Awaited<unknown>;
+    /**
+     * Per-piece listener that is called when the piece is unloaded from the store.
+     * Useful to set-up clean-up tasks.
+     */
+    onUnload(): Awaited<unknown>;
+}
+export interface RouteOptions extends PieceOptions {
+    /**
+     * The route the piece should represent.
+     * @default ''
+     * @example
+     * ```typescript
+     * '/users'
+     * // request.params -> {}
+     * ```
+     * @example
+     * ```typescript
+     * '/guilds/:guild/members/:member/'
+     * // request.params -> { guild: '...', member: '...' }
+     * ```
+     */
+    route?: string;
+    /**
+     * (RFC 7230 3.3.2) The maximum decimal number of octets.
+     * @default this.client.options.api?.maximumBodyLength ?? 1024 * 1024 * 50
+     */
+    maximumBodyLength?: number;
 }
 //# sourceMappingURL=Route.d.ts.map

@@ -1,71 +1,74 @@
 "use strict";
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Route = void 0;
 const framework_1 = require("@sapphire/framework");
 const discord_js_1 = require("discord.js");
-const Api_1 = require("../Api");
-const http_1 = require("http");
-const pathParsing_1 = require("../utils/pathParsing");
+const RouteData_1 = require("../utils/RouteData");
+const HttpMethods_1 = require("./http/HttpMethods");
 /**
  * @since 1.0.0
  */
 class Route extends framework_1.BasePiece {
-    constructor(context, { name, ...options } = {}) {
-        super(context, { ...options, name: name === null || name === void 0 ? void 0 : name.toLowerCase() });
+    constructor(context, options = {}) {
+        var _a, _b, _c, _d, _e, _f;
+        super(context, options);
         /**
-         * @since 1.0.0
+         * (RFC 7230 3.3.2) The maximum decimal number of octets.
          */
-        Object.defineProperty(this, "route", {
+        Object.defineProperty(this, "maximumBodyLength", {
             enumerable: true,
             configurable: true,
             writable: true,
             value: void 0
         });
         /**
-         * @since 1.0.0
+         * The route information.
          */
-        Object.defineProperty(this, "$internalRoutingTable", {
+        Object.defineProperty(this, "router", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        /**
+         * The methods this route accepts.
+         */
+        Object.defineProperty(this, "methods", {
             enumerable: true,
             configurable: true,
             writable: true,
             value: new discord_js_1.Collection()
         });
-        /**
-         * Internal route remains empty until either the store fills it from piece options or the decorator sets it.
-         * Its main function is acting as the main route for the DEFAULT HttpMethod decorators.
-         * OR as the base route for decorator defined sub routes.
-         * @protected
-         * @since 1.0.0
-         */
-        Object.defineProperty(this, "$internalRoute", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: ''
-        });
-        this.route = `${this.client.options.api.prefix}${this.$internalRoute}`;
-        Reflect.defineProperty(Route, Api_1.kRoutePathCacheSymbol, { value: [] });
-        for (const method of http_1.METHODS) {
-            this.$internalRoutingTable.set(method, Reflect.get(Route, Api_1.kRoutePathCacheSymbol)
-                .filter((rt) => rt.httpMethod === method)
-                .map((rt) => [rt.method, pathParsing_1.parse(rt.route)]));
+        this.router = new RouteData_1.RouteData(`${(_b = (_a = this.client.options.api) === null || _a === void 0 ? void 0 : _a.prefix) !== null && _b !== void 0 ? _b : ''}${(_c = options.route) !== null && _c !== void 0 ? _c : ''}`);
+        for (const [method, symbol] of HttpMethods_1.methodEntries) {
+            const value = Reflect.get(this, symbol);
+            if (typeof value === 'function')
+                this.methods.set(method, value);
         }
+        this.maximumBodyLength = (_f = (_d = options.maximumBodyLength) !== null && _d !== void 0 ? _d : (_e = this.client.options.api) === null || _e === void 0 ? void 0 : _e.maximumBodyLength) !== null && _f !== void 0 ? _f : 1024 * 1024 * 50;
     }
-    matchRoute(method, split) {
-        const routes = this.$internalRoutingTable.get(method);
-        if (!routes.some((rt) => rt[1].length === split.length))
-            return '';
-        for (const rte of routes) {
-            for (let ir = 0; ir < rte[1].length; ir++) {
-                const routeEntry = rte[1][ir];
-                if (routeEntry[1] !== 0 && routeEntry[0] === split[ir])
-                    return rte[0];
-            }
+    /**
+     * Per-piece listener that is called when the piece is loaded into the store.
+     * Useful to set-up asynchronous initialization tasks.
+     */
+    onLoad() {
+        const store = this.store;
+        for (const [method, cb] of this.methods) {
+            store.table.get(method).set(this, cb.bind(this));
         }
-        return '';
+        return undefined;
+    }
+    /**
+     * Per-piece listener that is called when the piece is unloaded from the store.
+     * Useful to set-up clean-up tasks.
+     */
+    onUnload() {
+        const store = this.store;
+        for (const [method] of this.methods) {
+            store.table.get(method).delete(this);
+        }
+        return undefined;
     }
 }
 exports.Route = Route;
-_a = Api_1.kRoutePathCacheSymbol;
 //# sourceMappingURL=Route.js.map

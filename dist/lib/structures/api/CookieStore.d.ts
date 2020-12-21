@@ -8,7 +8,7 @@ export declare class CookieStore extends Map<string, string> {
     constructor(request: ApiRequest, response: ApiResponse, secure: boolean);
     add(name: string, value: string, options?: SecureCookieStoreSetOptions): void;
     protected insert(name: string, entry: string): void;
-    protected prepare(name: string, value: string, { expires, maxAge, domain, path }?: SecureCookieStoreSetOptions): string;
+    protected prepare(name: string, value: string, { expires, maxAge, domain, path, httpOnly }?: SecureCookieStoreSetOptions): string;
     private static readonly octetRegExp;
     private static encodeCookieOctet;
 }
@@ -17,5 +17,6 @@ export interface SecureCookieStoreSetOptions {
     maxAge?: number;
     domain?: string;
     path?: string;
+    httpOnly?: boolean;
 }
 //# sourceMappingURL=CookieStore.d.ts.map

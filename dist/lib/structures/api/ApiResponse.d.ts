@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import { ServerResponse } from 'http';
-import { Types as MimeTypes } from '../../utils/Mime';
+import { MimeTypes } from '../../utils/MimeTypes';
 import type { CookieStore } from './CookieStore';
 /**
  * @since 1.0.0

@@ -1,6 +1,6 @@
-export declare const enum Types {
+export declare const enum MimeTypes {
     ApplicationJson = "application/json",
     ApplicationFormUrlEncoded = "application/x-www-form-urlencoded",
     TextPlain = "text/plain"
 }
-//# sourceMappingURL=Mime.d.ts.map
+//# sourceMappingURL=MimeTypes.d.ts.map
