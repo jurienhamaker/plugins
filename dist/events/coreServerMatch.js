@@ -9,11 +9,11 @@ class PluginEvent extends framework_1.Event {
     }
     async run(request, response, match) {
         try {
-            await this.client.server.middlewares.run(request, response, match.route);
-            this.client.server.emit(response.writableEnded ? "middlewareFailure" /* MiddlewareFailure */ : "middlewareSuccess" /* MiddlewareSuccess */, request, response, match);
+            await this.context.server.middlewares.run(request, response, match.route);
+            this.context.server.emit(response.writableEnded ? "middlewareFailure" /* MiddlewareFailure */ : "middlewareSuccess" /* MiddlewareSuccess */, request, response, match);
         }
         catch (error) {
-            this.client.server.emit("middlewareError" /* MiddlewareError */, request, response, error, match);
+            this.context.server.emit("middlewareError" /* MiddlewareError */, request, response, error, match);
         }
     }
 }

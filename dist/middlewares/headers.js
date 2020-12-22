@@ -5,7 +5,7 @@ const http_1 = require("http");
 const Middleware_1 = require("../lib/structures/Middleware");
 class PluginMiddleware extends Middleware_1.Middleware {
     constructor(context) {
-        var _a, _b;
+        var _a;
         super(context, { position: 10 });
         Object.defineProperty(this, "origin", {
             enumerable: true,
@@ -19,7 +19,7 @@ class PluginMiddleware extends Middleware_1.Middleware {
             writable: true,
             value: http_1.METHODS.join(', ')
         });
-        this.origin = (_b = (_a = this.client.options.api) === null || _a === void 0 ? void 0 : _a.origin) !== null && _b !== void 0 ? _b : '*';
+        this.origin = (_a = this.context.server.options.origin) !== null && _a !== void 0 ? _a : '*';
     }
     run(request, response) {
         response.setHeader('Date', new Date().toUTCString());

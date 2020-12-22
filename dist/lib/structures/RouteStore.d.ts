@@ -1,4 +1,4 @@
-import { BaseStore, SapphireClient } from '@sapphire/framework';
+import { Store } from '@sapphire/pieces';
 import { Collection } from 'discord.js';
 import type { ApiRequest } from './api/ApiRequest';
 import type { ApiResponse } from './api/ApiResponse';
@@ -14,9 +14,9 @@ export interface RouteMatch {
 /**
  * @since 1.0.0
  */
-export declare class RouteStore extends BaseStore<Route> {
+export declare class RouteStore extends Store<Route> {
     readonly table: Collection<Methods, Collection<Route, MethodCallback>>;
-    constructor(client: SapphireClient);
+    constructor();
     match(request: ApiRequest): RouteMatch | null;
 }
 //# sourceMappingURL=RouteStore.d.ts.map

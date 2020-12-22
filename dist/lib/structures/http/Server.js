@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Server = exports.ServerEvents = void 0;
+const pieces_1 = require("@sapphire/pieces");
 const events_1 = require("events");
 const http_1 = require("http");
 const ApiRequest_1 = require("../api/ApiRequest");
@@ -24,23 +25,35 @@ var ServerEvents;
 class Server extends events_1.EventEmitter {
     /**
      * @since 1.0.0
-     * @param client The @sapphire/framework Client instance
+     * @param options The options for this server
      */
-    constructor(client) {
-        var _a, _b, _c;
+    constructor({ auth, ...options } = {}) {
+        var _a;
         super();
+        /**
+         * The routes this server holds.
+         * @since 1.0.0
+         */
         Object.defineProperty(this, "routes", {
             enumerable: true,
             configurable: true,
             writable: true,
             value: void 0
         });
+        /**
+         * The middlewares this server holds.
+         * @since 1.0.0
+         */
         Object.defineProperty(this, "middlewares", {
             enumerable: true,
             configurable: true,
             writable: true,
             value: void 0
         });
+        /**
+         * The authentication system.
+         * @since 1.0.0
+         */
         Object.defineProperty(this, "auth", {
             enumerable: true,
             configurable: true,
@@ -58,35 +71,36 @@ class Server extends events_1.EventEmitter {
             value: void 0
         });
         /**
-         * The managing Client instance on which this Server instance is mounted.
+         * The options for this server.
          * @since 1.0.0
          */
-        Object.defineProperty(this, "client", {
+        Object.defineProperty(this, "options", {
             enumerable: true,
             configurable: true,
             writable: true,
             value: void 0
         });
-        this.client = client;
+        pieces_1.Store.injectedContext.server = this;
+        this.options = options;
         this.server = http_1.createServer({
             // eslint-disable-next-line @typescript-eslint/naming-convention
             IncomingMessage: ApiRequest_1.ApiRequest,
             // eslint-disable-next-line @typescript-eslint/naming-convention
             ServerResponse: ApiResponse_1.ApiResponse,
-            ...((_b = (_a = this.client.options.api) === null || _a === void 0 ? void 0 : _a.server) !== null && _b !== void 0 ? _b : {})
+            ...((_a = options.server) !== null && _a !== void 0 ? _a : {})
         });
-        this.routes = new RouteStore_1.RouteStore(client);
-        this.middlewares = new MiddlewareStore_1.MiddlewareStore(client);
-        this.auth = Auth_1.Auth.create(client, (_c = this.client.options.api) === null || _c === void 0 ? void 0 : _c.auth);
+        this.routes = new RouteStore_1.RouteStore();
+        this.middlewares = new MiddlewareStore_1.MiddlewareStore();
+        this.auth = Auth_1.Auth.create(auth);
         this.server.on('error', this.emit.bind(this, "error" /* Error */));
         this.server.on('request', this.emit.bind(this, "request" /* Request */));
     }
     connect() {
-        var _a, _b;
+        var _a;
         const { server } = this;
         server.listen({
             port: 4000,
-            ...((_b = (_a = this.client.options.api) === null || _a === void 0 ? void 0 : _a.listenOptions) !== null && _b !== void 0 ? _b : {})
+            ...((_a = this.options.listenOptions) !== null && _a !== void 0 ? _a : {})
         });
         return new Promise((resolve, reject) => {
             function listening() {

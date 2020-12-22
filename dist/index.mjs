@@ -1,7 +1,6 @@
 import mod from "./index.js";
 
 export default mod;
-export const Api = mod.Api;
 export const ApiRequest = mod.ApiRequest;
 export const ApiResponse = mod.ApiResponse;
 export const Auth = mod.Auth;

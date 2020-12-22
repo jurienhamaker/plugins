@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Route = void 0;
-const framework_1 = require("@sapphire/framework");
+const pieces_1 = require("@sapphire/pieces");
 const discord_js_1 = require("discord.js");
 const RouteData_1 = require("../utils/RouteData");
 const HttpMethods_1 = require("./http/HttpMethods");
 /**
  * @since 1.0.0
  */
-class Route extends framework_1.BasePiece {
+class Route extends pieces_1.Piece {
     constructor(context, options = {}) {
-        var _a, _b, _c, _d, _e, _f;
+        var _a, _b, _c, _d;
         super(context, options);
         /**
          * (RFC 7230 3.3.2) The maximum decimal number of octets.
@@ -39,13 +39,14 @@ class Route extends framework_1.BasePiece {
             writable: true,
             value: new discord_js_1.Collection()
         });
-        this.router = new RouteData_1.RouteData(`${(_b = (_a = this.client.options.api) === null || _a === void 0 ? void 0 : _a.prefix) !== null && _b !== void 0 ? _b : ''}${(_c = options.route) !== null && _c !== void 0 ? _c : ''}`);
+        const api = this.context.server.options;
+        this.router = new RouteData_1.RouteData(`${(_a = api.prefix) !== null && _a !== void 0 ? _a : ''}${(_b = options.route) !== null && _b !== void 0 ? _b : ''}`);
         for (const [method, symbol] of HttpMethods_1.methodEntries) {
             const value = Reflect.get(this, symbol);
             if (typeof value === 'function')
                 this.methods.set(method, value);
         }
-        this.maximumBodyLength = (_f = (_d = options.maximumBodyLength) !== null && _d !== void 0 ? _d : (_e = this.client.options.api) === null || _e === void 0 ? void 0 : _e.maximumBodyLength) !== null && _f !== void 0 ? _f : 1024 * 1024 * 50;
+        this.maximumBodyLength = (_d = (_c = options.maximumBodyLength) !== null && _c !== void 0 ? _c : api.maximumBodyLength) !== null && _d !== void 0 ? _d : 1024 * 1024 * 50;
     }
     /**
      * Per-piece listener that is called when the piece is loaded into the store.

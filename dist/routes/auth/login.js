@@ -11,7 +11,7 @@ const HttpMethods_1 = require("../../lib/structures/http/HttpMethods");
 const Route_1 = require("../../lib/structures/Route");
 class PluginRoute extends Route_1.Route {
     constructor(context) {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c;
         super(context);
         Object.defineProperty(this, "scopes", {
             enumerable: true,
@@ -31,10 +31,11 @@ class PluginRoute extends Route_1.Route {
             writable: true,
             value: void 0
         });
-        this.enabled = this.client.server.auth !== null;
-        this.scopes = (_c = (_b = (_a = this.client.options.api) === null || _a === void 0 ? void 0 : _a.auth) === null || _b === void 0 ? void 0 : _b.scopes) !== null && _c !== void 0 ? _c : ['identify'];
+        const { server } = this.context;
+        this.enabled = server.auth !== null;
+        this.scopes = (_b = (_a = server.auth) === null || _a === void 0 ? void 0 : _a.scopes) !== null && _b !== void 0 ? _b : ['identify'];
         this.scopeString = this.scopes.join(' ');
-        this.redirectUri = (_e = (_d = this.client.options.api) === null || _d === void 0 ? void 0 : _d.auth) === null || _e === void 0 ? void 0 : _e.redirect;
+        this.redirectUri = (_c = server.auth) === null || _c === void 0 ? void 0 : _c.redirect;
     }
     async [HttpMethods_1.methods.POST](request, response) {
         const body = request.body;
@@ -49,7 +50,7 @@ class PluginRoute extends Route_1.Route {
         if (!data.user) {
             return response.status(500 /* InternalServerError */).json({ error: 'Failed to fetch the user.' });
         }
-        const auth = this.client.server.auth;
+        const auth = this.context.server.auth;
         const token = auth.encrypt({
             id: data.user.id,
             expires: value.expires_in,
@@ -60,10 +61,11 @@ class PluginRoute extends Route_1.Route {
         return response.json(data);
     }
     async fetchAuth(code) {
+        const { id, secret } = this.context.server.auth;
         const data = {
             /* eslint-disable @typescript-eslint/naming-convention */
-            client_id: this.client.server.auth.id,
-            client_secret: this.client.server.auth.secret,
+            client_id: id,
+            client_secret: secret,
             code,
             grant_type: 'authorization_code',
             scope: this.scopeString,

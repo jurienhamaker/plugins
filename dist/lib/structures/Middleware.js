@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Middleware = void 0;
-const framework_1 = require("@sapphire/framework");
+const pieces_1 = require("@sapphire/pieces");
 /**
  * @since 1.0.0
  */
-class Middleware extends framework_1.BasePiece {
+class Middleware extends pieces_1.Piece {
     constructor(context, options = {}) {
         var _a;
         super(context, options);

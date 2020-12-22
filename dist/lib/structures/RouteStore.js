@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RouteStore = void 0;
-const framework_1 = require("@sapphire/framework");
+const pieces_1 = require("@sapphire/pieces");
 const discord_js_1 = require("discord.js");
 const url_1 = require("url");
 const HttpMethods_1 = require("./http/HttpMethods");
@@ -9,9 +9,9 @@ const Route_1 = require("./Route");
 /**
  * @since 1.0.0
  */
-class RouteStore extends framework_1.BaseStore {
-    constructor(client) {
-        super(client, Route_1.Route, { name: 'routes' });
+class RouteStore extends pieces_1.Store {
+    constructor() {
+        super(Route_1.Route, { name: 'routes' });
         Object.defineProperty(this, "table", {
             enumerable: true,
             configurable: true,

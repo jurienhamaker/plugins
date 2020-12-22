@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MiddlewareStore = void 0;
-const framework_1 = require("@sapphire/framework");
+const pieces_1 = require("@sapphire/pieces");
 const Middleware_1 = require("./Middleware");
 /**
  * @since 1.0.0
  */
-class MiddlewareStore extends framework_1.BaseStore {
-    constructor(client) {
-        super(client, Middleware_1.Middleware, { name: 'middlewares' });
+class MiddlewareStore extends pieces_1.Store {
+    constructor() {
+        super(Middleware_1.Middleware, { name: 'middlewares' });
         /**
          * The sorted middlewares, in ascending order of {@see Middleware#position}.
          */
