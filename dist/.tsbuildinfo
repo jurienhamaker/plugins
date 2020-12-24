@@ -211,6 +211,11 @@
         "signature": "1e61418f41d404e744b6536af9f8c6f6674dd4d54c12335cd0c4f7eded69cf3f",
         "affectsGlobalScope": true
       },
+      "../node_modules/tslib/tslib.d.ts": {
+        "version": "9eb0ae9fa333acfc2dcbe6a7eaa2ab8be46b97ca259982c797c39167823235d5",
+        "signature": "9eb0ae9fa333acfc2dcbe6a7eaa2ab8be46b97ca259982c797c39167823235d5",
+        "affectsGlobalScope": false
+      },
       "../../../node_modules/@types/node/globals.d.ts": {
         "version": "215d8d9a2c480fd460127edc048d68d9931d3b27f95132253a6e71975f060bb1",
         "signature": "215d8d9a2c480fd460127edc048d68d9931d3b27f95132253a6e71975f060bb1",
@@ -786,6 +791,8 @@
       "strict": true,
       "target": 6,
       "useDefineForClassFields": true,
+      "importHelpers": true,
+      "noEmitHelpers": true,
       "rootDir": "../src",
       "outDir": "./",
       "composite": true,
@@ -1119,6 +1126,7 @@
       ],
       "../src/index.ts": [
         "../../../node_modules/@sapphire/framework/dist/index.d.ts",
+        "../node_modules/tslib/tslib.d.ts",
         "../src/lib/Logger.ts",
         "../src/lib/LoggerLevel.ts",
         "../src/lib/LoggerStyle.ts",
@@ -1130,22 +1138,27 @@
         "../../../node_modules/@types/node/console.d.ts",
         "../../../node_modules/@types/node/util.d.ts",
         "../../../node_modules/colorette/colorette.d.ts",
+        "../node_modules/tslib/tslib.d.ts",
         "../src/lib/LoggerLevel.ts"
       ],
       "../src/lib/LoggerLevel.ts": [
+        "../node_modules/tslib/tslib.d.ts",
         "../src/lib/LoggerStyle.ts",
         "../src/lib/LoggerTimestamp.ts"
       ],
       "../src/lib/LoggerStyle.ts": [
-        "../../../node_modules/colorette/colorette.d.ts"
+        "../../../node_modules/colorette/colorette.d.ts",
+        "../node_modules/tslib/tslib.d.ts"
       ],
       "../src/lib/LoggerTimestamp.ts": [
         "../../../node_modules/@sapphire/time-utilities/dist/index.d.ts",
+        "../node_modules/tslib/tslib.d.ts",
         "../src/lib/LoggerStyle.ts"
       ],
       "../src/register.ts": [
         "../../../node_modules/@sapphire/framework/dist/index.d.ts",
         "../../../node_modules/discord.js/typings/index.d.ts",
+        "../node_modules/tslib/tslib.d.ts",
         "../src/index.ts",
         "../src/lib/Logger.ts"
       ]
@@ -1649,6 +1662,7 @@
       "../../../node_modules/typescript/lib/lib.esnext.promise.d.ts",
       "../../../node_modules/typescript/lib/lib.esnext.string.d.ts",
       "../../../node_modules/typescript/lib/lib.esnext.weakref.d.ts",
+      "../node_modules/tslib/tslib.d.ts",
       "../src/index.ts",
       "../src/lib/Logger.ts",
       "../src/lib/LoggerLevel.ts",
