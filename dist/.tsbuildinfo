@@ -597,8 +597,8 @@
         "affectsGlobalScope": false
       },
       "../src/register.ts": {
-        "version": "bbcbfb20d42de53c8902c16f0b540f32463113581b5d50fe58b503971ec4b3a4",
-        "signature": "9317b0ebb6333f678adb85f8515f5ece3c364bf990601466727be44c2ffa7369",
+        "version": "a322e2fb3734d50bcfcbab203d6d451375e5bf72cc44a1a3346892605bb05b34",
+        "signature": "e9bb13f5f482ac61752efffcf4f1bf4eb6ab86dbb8dbc81da5bd0e1514b3566d",
         "affectsGlobalScope": false
       },
       "../../../node_modules/@babel/types/lib/index.d.ts": {

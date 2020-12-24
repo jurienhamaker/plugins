@@ -10,12 +10,12 @@ class LoggerPlugin extends framework_1.Plugin {
     /**
      * @since 1.0.0
      */
-    static [framework_1.preInitialization](options) {
+    static [framework_1.preGenericsInitialization](options) {
         var _a;
         (_a = options.logger) !== null && _a !== void 0 ? _a : (options.logger = {});
         options.logger.instance = new Logger_1.Logger(options.logger);
     }
 }
 exports.LoggerPlugin = LoggerPlugin;
-framework_1.SapphireClient.plugins.registerPreInitializationHook(LoggerPlugin[framework_1.preInitialization], 'Logger-PreInitialization');
+framework_1.SapphireClient.plugins.registerPreGenericsInitializationHook(LoggerPlugin[framework_1.preGenericsInitialization], 'Logger-PreGenericsInitialization');
 //# sourceMappingURL=register.js.map

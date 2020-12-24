@@ -1,4 +1,4 @@
-import { Plugin, preInitialization, SapphireClient } from '@sapphire/framework';
+import { Plugin, preGenericsInitialization, SapphireClient } from '@sapphire/framework';
 import type { ClientOptions } from 'discord.js';
 import { LoggerOptions } from './lib/Logger';
 /**
@@ -8,7 +8,7 @@ export declare class LoggerPlugin extends Plugin {
     /**
      * @since 1.0.0
      */
-    static [preInitialization](this: SapphireClient, options: ClientOptions): void;
+    static [preGenericsInitialization](this: SapphireClient, options: ClientOptions): void;
 }
 declare module '@sapphire/framework' {
     interface ClientLoggerOptions extends LoggerOptions {
