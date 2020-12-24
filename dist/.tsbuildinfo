@@ -592,8 +592,8 @@
         "affectsGlobalScope": false
       },
       "../src/index.ts": {
-        "version": "12d0e4dbad92ddfd270053dc13b0bdd0a5ba4776465b7c40714298793e2d5659",
-        "signature": "1a59e81dba879efc2e90bfc67dd0a6e952e3b610cde122e65bac73e1889fae8a",
+        "version": "f3263e4842dfd9be7b3008c00f4bb1bc40cc03e6c82e5ef76b3d1947839e5ef1",
+        "signature": "e33afc8090eddf87afcb2a251e79ae76881bd76b2f7a67441cea7c438d328b1a",
         "affectsGlobalScope": false
       },
       "../src/register.ts": {
@@ -1118,10 +1118,12 @@
         "../../../node_modules/pretty-format/build/types.d.ts"
       ],
       "../src/index.ts": [
+        "../../../node_modules/@sapphire/framework/dist/index.d.ts",
         "../src/lib/Logger.ts",
         "../src/lib/LoggerLevel.ts",
         "../src/lib/LoggerStyle.ts",
-        "../src/lib/LoggerTimestamp.ts"
+        "../src/lib/LoggerTimestamp.ts",
+        "../src/register.ts"
       ],
       "../src/lib/Logger.ts": [
         "../../../node_modules/@sapphire/framework/dist/index.d.ts",
@@ -1144,6 +1146,7 @@
       "../src/register.ts": [
         "../../../node_modules/@sapphire/framework/dist/index.d.ts",
         "../../../node_modules/discord.js/typings/index.d.ts",
+        "../src/index.ts",
         "../src/lib/Logger.ts"
       ]
     },
@@ -1473,6 +1476,7 @@
         "../../../node_modules/pretty-format/build/types.d.ts"
       ],
       "../src/index.ts": [
+        "../../../node_modules/@sapphire/framework/dist/index.d.ts",
         "../src/lib/Logger.ts",
         "../src/lib/LoggerLevel.ts",
         "../src/lib/LoggerStyle.ts",
