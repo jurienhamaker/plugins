@@ -1,10 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PluginRoute = void 0;
-const node_fetch_1 = __importDefault(require("node-fetch"));
+const tslib_1 = require("tslib");
+const node_fetch_1 = tslib_1.__importDefault(require("node-fetch"));
 const querystring_1 = require("querystring");
 const util_1 = require("util");
 require("../../lib/structures/http/HttpCodes");

@@ -1,20 +1,8 @@
 "use strict";
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
 var _secret;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Auth = void 0;
+const tslib_1 = require("tslib");
 const crypto_1 = require("crypto");
 class Auth {
     constructor(options) {
@@ -65,14 +53,14 @@ class Auth {
         this.cookie = (_a = options.cookie) !== null && _a !== void 0 ? _a : 'SAPPHIRE_AUTH';
         this.scopes = (_b = options.scopes) !== null && _b !== void 0 ? _b : ['identify'];
         this.redirect = options.redirect;
-        __classPrivateFieldSet(this, _secret, options.secret);
+        tslib_1.__classPrivateFieldSet(this, _secret, options.secret);
     }
     /**
      * The client secret, this can be retrieved in Discord Developer Portal at https://discord.com/developers/applications.
      * @since 1.0.0
      */
     get secret() {
-        return __classPrivateFieldGet(this, _secret);
+        return tslib_1.__classPrivateFieldGet(this, _secret);
     }
     /**
      * Encrypts an object with aes-256-cbc to use as a token.
@@ -82,7 +70,7 @@ class Auth {
      */
     encrypt(data) {
         const iv = crypto_1.randomBytes(16);
-        const cipher = crypto_1.createCipheriv('aes-256-cbc', __classPrivateFieldGet(this, _secret), iv);
+        const cipher = crypto_1.createCipheriv('aes-256-cbc', tslib_1.__classPrivateFieldGet(this, _secret), iv);
         return `${cipher.update(JSON.stringify(data), 'utf8', 'base64') + cipher.final('base64')}.${iv.toString('base64')}`;
     }
     /**
@@ -93,7 +81,7 @@ class Auth {
      */
     decrypt(token) {
         const [data, iv] = token.split('.');
-        const decipher = crypto_1.createDecipheriv('aes-256-cbc', __classPrivateFieldGet(this, _secret), Buffer.from(iv, 'base64'));
+        const decipher = crypto_1.createDecipheriv('aes-256-cbc', tslib_1.__classPrivateFieldGet(this, _secret), Buffer.from(iv, 'base64'));
         return JSON.parse(decipher.update(data, 'base64', 'utf8') + decipher.final('utf8'));
     }
     static create(options) {
