@@ -79,7 +79,7 @@ class Logger extends framework_1.Logger {
      * @since 1.0.0
      * @param values The values to pre-process.
      */
-    preprocess(...values) {
+    preprocess(values) {
         const inspectOptions = { colors: colorette_1.options.enabled, depth: this.depth };
         return values.map((value) => (typeof value === 'string' ? value : util_1.inspect(value, inspectOptions))).join(this.join);
     }

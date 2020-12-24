@@ -38,7 +38,7 @@ export declare class Logger extends BuiltinLogger {
      * @since 1.0.0
      * @param values The values to pre-process.
      */
-    protected preprocess(...values: readonly unknown[]): string;
+    protected preprocess(values: readonly unknown[]): string;
     private get levels();
     /**
      * Gets whether or not colorette is enabled.
