@@ -121,7 +121,7 @@ class Logger extends framework_1.Logger {
         return new LoggerLevel_1.LoggerLevel({
             ...defaults,
             timestamp: defaults.timestamp === null ? null : { ...((_a = defaults.timestamp) !== null && _a !== void 0 ? _a : {}), color },
-            infix: name.length ? `${color(name.padEnd(5, ' '))} -` : ''
+            infix: name.length ? `${color(name.padEnd(5, ' '))} - ` : ''
         });
     }
 }

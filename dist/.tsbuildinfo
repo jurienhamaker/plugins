@@ -587,7 +587,7 @@
         "affectsGlobalScope": false
       },
       "../src/lib/Logger.ts": {
-        "version": "cc8d3250a68357201a7e3f7d3141a9c37c2a710f309eb9532a72a6c329722430",
+        "version": "53939cd90e36043bb63b594e52e7d0e3a4c07cafd3b57b276769f207cc44d00d",
         "signature": "0e2662abc0a5e880c250514ca2f4ed60c69c15168f7ef61a8b2fedd4640b88d6",
         "affectsGlobalScope": false
       },
