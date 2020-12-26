@@ -62,7 +62,7 @@ class RouteData {
      * @since 1.0.0
      */
     static parsePart(value) {
-        const type = value.charCodeAt(0) === colon ? 0 /* Static */ : 1 /* Dynamic */;
+        const type = value.charCodeAt(0) === colon ? 1 /* Dynamic */ : 0 /* Static */;
         if (type === 1 /* Dynamic */)
             value = value.substring(1);
         return { value, type };
@@ -72,9 +72,11 @@ class RouteData {
      */
     static split(url) {
         if (url.length === 1 && url.charCodeAt(0) === slash)
-            return [url];
-        else if (url.charCodeAt(0) === slash)
+            return [''];
+        if (url.charCodeAt(0) === slash)
             url = url.substring(1);
+        if (url.length > 0 && url.charCodeAt(url.length - 1) === slash)
+            url = url.substring(0, url.length - 1);
         return url.split('/');
     }
 }
