@@ -11,7 +11,7 @@ const Route_1 = require("../../lib/structures/Route");
 const sleep = util_1.promisify(setTimeout);
 class PluginRoute extends Route_1.Route {
     constructor(context) {
-        super(context);
+        super(context, { route: 'oauth/logout' });
         this.enabled = this.context.server.auth !== null;
     }
     async [HttpMethods_1.methods.POST](request, response) {

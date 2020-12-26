@@ -10,7 +10,7 @@ const Route_1 = require("../../lib/structures/Route");
 class PluginRoute extends Route_1.Route {
     constructor(context) {
         var _a, _b, _c;
-        super(context);
+        super(context, { route: 'oauth/callback' });
         Object.defineProperty(this, "scopes", {
             enumerable: true,
             configurable: true,
@@ -40,7 +40,7 @@ class PluginRoute extends Route_1.Route {
         if (typeof (body === null || body === void 0 ? void 0 : body.code) !== 'string') {
             return response.badRequest();
         }
-        const value = await this.fetchAuth(body.code);
+        const value = await this.fetchAuth(body);
         if (value === null) {
             return response.status(500 /* InternalServerError */).json({ error: 'Failed to fetch the token.' });
         }
@@ -58,16 +58,17 @@ class PluginRoute extends Route_1.Route {
         response.cookies.add(auth.cookie, token, { maxAge: value.expires_in });
         return response.json(data);
     }
-    async fetchAuth(code) {
+    async fetchAuth(body) {
+        var _a;
         const { id, secret } = this.context.server.auth;
         const data = {
             /* eslint-disable @typescript-eslint/naming-convention */
             client_id: id,
             client_secret: secret,
-            code,
+            code: body.code,
             grant_type: 'authorization_code',
             scope: this.scopeString,
-            redirect_uri: this.redirectUri
+            redirect_uri: (_a = this.redirectUri) !== null && _a !== void 0 ? _a : body.redirectUri
             /* eslint-enable @typescript-eslint/naming-convention */
         };
         const result = await node_fetch_1.default('https://discord.com/api/v8/oauth2/token', {
@@ -77,7 +78,11 @@ class PluginRoute extends Route_1.Route {
                 'content-type': 'application/x-www-form-urlencoded'
             }
         });
-        return result.ok ? (await result.json()) : null;
+        const json = await result.json();
+        if (result.ok)
+            return json;
+        this.context.client.logger.error(json);
+        return null;
     }
     async fetchData(token) {
         const [user, guilds, connections] = await Promise.all([
@@ -99,4 +104,4 @@ class PluginRoute extends Route_1.Route {
     }
 }
 exports.PluginRoute = PluginRoute;
-//# sourceMappingURL=login.js.map
+//# sourceMappingURL=callback.js.map

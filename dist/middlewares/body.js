@@ -8,9 +8,18 @@ const Middleware_1 = require("../lib/structures/Middleware");
 require("../lib/utils/MimeTypes");
 class PluginMiddleware extends Middleware_1.Middleware {
     constructor(context) {
+        var _a;
         super(context, { position: 20 });
+        Object.defineProperty(this, "maximumBodyLength", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        this.maximumBodyLength = (_a = this.context.server.options.maximumBodyLength) !== null && _a !== void 0 ? _a : 1024 * 1024 * 50;
     }
     run(request, response, route) {
+        var _a;
         const contentType = request.headers['content-type'];
         if (typeof contentType !== 'string')
             return null;
@@ -19,7 +28,8 @@ class PluginMiddleware extends Middleware_1.Middleware {
         if (typeof lengthString !== 'string')
             return null;
         const length = Number(lengthString);
-        if (length > route.maximumBodyLength) {
+        const maximumLength = (_a = route === null || route === void 0 ? void 0 : route.maximumBodyLength) !== null && _a !== void 0 ? _a : this.maximumBodyLength;
+        if (length > maximumLength) {
             response.status(413 /* PayloadTooLarge */).json({ error: 'Exceeded maximum content length.' });
             return null;
         }

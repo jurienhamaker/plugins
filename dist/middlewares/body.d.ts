@@ -4,8 +4,9 @@ import type { ApiResponse } from '../lib/structures/api/ApiResponse';
 import { Middleware } from '../lib/structures/Middleware';
 import type { Route } from '../lib/structures/Route';
 export declare class PluginMiddleware extends Middleware {
+    private readonly maximumBodyLength;
     constructor(context: PieceContext);
-    run(request: ApiRequest, response: ApiResponse, route: Route): Promise<void> | null;
+    run(request: ApiRequest, response: ApiResponse, route: Route | null): Promise<void> | null;
     private textPlain;
     private applicationJson;
     private applicationFormUrlEncoded;

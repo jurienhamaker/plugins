@@ -23,9 +23,9 @@ export declare abstract class Middleware extends Piece {
      * The method to be overridden by other middlewares.
      * @param request The client's request.
      * @param response The server's response.
-     * @param route The route that matched this request.
+     * @param route The route that matched this request, will be `null` if none matched.
      */
-    abstract run(request: ApiRequest, response: ApiResponse, route: Route): Awaited<unknown>;
+    abstract run(request: ApiRequest, response: ApiResponse, route: Route | null): Awaited<unknown>;
 }
 /**
  * The options for all middlewares.

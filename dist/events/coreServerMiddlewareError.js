@@ -9,6 +9,9 @@ class PluginEvent extends framework_1.Event {
         super(context, { emitter: 'server', event: "middlewareError" /* MiddlewareError */ });
     }
     run(_, response, error) {
+        // Log the error to console:
+        this.context.client.logger.fatal(error);
+        // Send a response to the client if none was sent:
         if (!response.writableEnded)
             response.status(500 /* InternalServerError */).json({ error: error.message });
     }

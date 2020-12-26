@@ -8,7 +8,8 @@ class PluginEvent extends framework_1.Event {
         super(context, { emitter: 'server', event: "noMatch" /* NoMatch */ });
     }
     run(_, response) {
-        response.notFound();
+        if (!response.writableEnded)
+            response.notFound();
     }
 }
 exports.PluginEvent = PluginEvent;

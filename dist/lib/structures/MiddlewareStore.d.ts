@@ -12,7 +12,7 @@ export declare class MiddlewareStore extends Store<Middleware> {
      */
     readonly sortedMiddlewares: Middleware[];
     constructor();
-    run(request: ApiRequest, response: ApiResponse, route: Route): Promise<void>;
+    run(request: ApiRequest, response: ApiResponse, route: Route | null): Promise<void>;
     set(key: string, value: Middleware): this;
     delete(key: string): boolean;
     clear(): void;
