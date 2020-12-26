@@ -15,9 +15,9 @@ class Api extends framework_1.Plugin {
         this.server = new Server_1.Server(options.api);
         this.registerStore(this.server.routes) //
             .registerStore(this.server.middlewares);
-        this.events.registerPath(path_1.join(__dirname, '..', 'events'));
-        this.server.routes.registerPath(path_1.join(__dirname, '..', 'routes'));
-        this.server.middlewares.registerPath(path_1.join(__dirname, '..', 'middlewares'));
+        this.events.registerPath(path_1.join(__dirname, 'events'));
+        this.server.routes.registerPath(path_1.join(__dirname, 'routes'));
+        this.server.middlewares.registerPath(path_1.join(__dirname, 'middlewares'));
     }
     /**
      * @since 1.0.0
