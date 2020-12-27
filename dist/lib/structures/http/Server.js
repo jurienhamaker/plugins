@@ -15,6 +15,7 @@ var ServerEvents;
     ServerEvents["Request"] = "request";
     ServerEvents["Match"] = "match";
     ServerEvents["NoMatch"] = "noMatch";
+    ServerEvents["RouteError"] = "routeError";
     ServerEvents["MiddlewareFailure"] = "middlewareFailure";
     ServerEvents["MiddlewareError"] = "middlewareError";
     ServerEvents["MiddlewareSuccess"] = "middlewareSuccess";

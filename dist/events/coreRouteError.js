@@ -6,7 +6,7 @@ require("../lib/structures/http/HttpCodes");
 require("../lib/structures/http/Server");
 class PluginEvent extends framework_1.Event {
     constructor(context) {
-        super(context, { emitter: 'server', event: "middlewareError" /* MiddlewareError */ });
+        super(context, { emitter: 'server', event: "routeError" /* RouteError */ });
     }
     run(error, { response }) {
         var _a;
@@ -18,4 +18,4 @@ class PluginEvent extends framework_1.Event {
     }
 }
 exports.PluginEvent = PluginEvent;
-//# sourceMappingURL=coreServerMiddlewareError.js.map
+//# sourceMappingURL=coreRouteError.js.map

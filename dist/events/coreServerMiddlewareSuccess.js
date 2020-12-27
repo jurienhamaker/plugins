@@ -8,7 +8,12 @@ class PluginEvent extends framework_1.Event {
         super(context, { emitter: 'server', event: "middlewareSuccess" /* MiddlewareSuccess */ });
     }
     async run(request, response, match) {
-        await match.cb(request, response);
+        try {
+            await match.cb(request, response);
+        }
+        catch (error) {
+            this.context.server.emit("routeError" /* RouteError */, error, { request, response, match });
+        }
     }
 }
 exports.PluginEvent = PluginEvent;

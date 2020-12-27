@@ -15,7 +15,7 @@ class PluginEvent extends framework_1.Event {
             await this.context.server.middlewares.run(request, response, (_a = match === null || match === void 0 ? void 0 : match.route) !== null && _a !== void 0 ? _a : null);
         }
         catch (error) {
-            this.context.server.emit("middlewareError" /* MiddlewareError */, request, response, error, match);
+            this.context.server.emit("middlewareError" /* MiddlewareError */, error, { request, response, match });
             // If a middleware errored, it might cause undefined behaviour in the routes, so we will return early.
             return;
         }

@@ -1,0 +1,1 @@
+{"version":3,"file":"coreRouteError.d.ts","sourceRoot":"","sources":["../../src/events/coreRouteError.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,YAAY,EAAE,MAAM,qBAAqB,CAAC;AAE1D,OAAO,EAAE,sBAAsB,EAAgB,MAAM,+BAA+B,CAAC;AAErF,qBAAa,WAAY,SAAQ,KAAK;gBAClB,OAAO,EAAE,YAAY;IAIjC,GAAG,CAAC,KAAK,EAAE,KAAK,EAAE,EAAE,QAAQ,EAAE,EAAE,sBAAsB;CAO7D"}

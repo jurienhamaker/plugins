@@ -4,4 +4,4 @@ export declare class PluginEvent extends Event {
     constructor(context: PieceContext);
     run(error: Error, { response }: MiddlewareErrorContext): void;
 }
-//# sourceMappingURL=coreServerMiddlewareError.d.ts.map
+//# sourceMappingURL=coreRouteError.d.ts.map
