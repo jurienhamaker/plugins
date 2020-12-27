@@ -572,8 +572,8 @@
         "affectsGlobalScope": false
       },
       "../../../node_modules/@sapphire/time-utilities/dist/lib/Timestamp.d.ts": {
-        "version": "100396c680da4b51bdeb314372d6a21bc1711b364f3c7009eb8dcd641aa5c270",
-        "signature": "100396c680da4b51bdeb314372d6a21bc1711b364f3c7009eb8dcd641aa5c270",
+        "version": "959ce4e97c297bebb166a4149005d4dcc24334d17a9aff8a405026b34bef6206",
+        "signature": "959ce4e97c297bebb166a4149005d4dcc24334d17a9aff8a405026b34bef6206",
         "affectsGlobalScope": false
       },
       "../../../node_modules/@sapphire/time-utilities/dist/index.d.ts": {
