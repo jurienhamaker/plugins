@@ -532,8 +532,8 @@
         "affectsGlobalScope": false
       },
       "../../../node_modules/@sapphire/framework/dist/index.d.ts": {
-        "version": "30fce2e7a9da8debe062817a44127ba368a2d335fdb0f1b9d409c6608a994aaf",
-        "signature": "30fce2e7a9da8debe062817a44127ba368a2d335fdb0f1b9d409c6608a994aaf",
+        "version": "91d0516736468a4e426035b45d3cfc72ba23f139d5b535460bfaefa6d110e6b9",
+        "signature": "91d0516736468a4e426035b45d3cfc72ba23f139d5b535460bfaefa6d110e6b9",
         "affectsGlobalScope": false
       },
       "../../../node_modules/colorette/colorette.d.ts": {
