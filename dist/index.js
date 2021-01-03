@@ -2,5 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 tslib_1.__exportStar(require("./lib/types/options"), exports);
+tslib_1.__exportStar(require("./lib/types/context"), exports);
 tslib_1.__exportStar(require("./lib/I18nextHandler"), exports);
 //# sourceMappingURL=index.js.map

@@ -40,6 +40,9 @@ class I18nextHandler {
             writable: true,
             value: new Map()
         });
+        /**
+         * The options I18nextHandler was initialized with in the client.
+         */
         Object.defineProperty(this, "options", {
             enumerable: true,
             configurable: true,

@@ -16,7 +16,10 @@ export declare class I18nextHandler {
      * @since 1.0.0
      */
     readonly languages: Map<string, TFunction>;
-    private readonly options?;
+    /**
+     * The options I18nextHandler was initialized with in the client.
+     */
+    readonly options?: I18nOptions;
     private readonly languagesDir;
     private readonly backendOptions;
     /**
