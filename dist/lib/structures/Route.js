@@ -10,12 +10,21 @@ const HttpMethods_1 = require("./http/HttpMethods");
  */
 class Route extends pieces_1.Piece {
     constructor(context, options = {}) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e, _f;
         super(context, options);
         /**
          * (RFC 7230 3.3.2) The maximum decimal number of octets.
          */
         Object.defineProperty(this, "maximumBodyLength", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        /**
+         * The accepted content types.
+         */
+        Object.defineProperty(this, "acceptedContentMimeTypes", {
             enumerable: true,
             configurable: true,
             writable: true,
@@ -47,6 +56,7 @@ class Route extends pieces_1.Piece {
                 this.methods.set(method, value);
         }
         this.maximumBodyLength = (_d = (_c = options.maximumBodyLength) !== null && _c !== void 0 ? _c : api.maximumBodyLength) !== null && _d !== void 0 ? _d : 1024 * 1024 * 50;
+        this.acceptedContentMimeTypes = (_f = (_e = options.acceptedContentMimeTypes) !== null && _e !== void 0 ? _e : api.acceptedContentMimeTypes) !== null && _f !== void 0 ? _f : null;
     }
     /**
      * Per-piece listener that is called when the piece is loaded into the store.

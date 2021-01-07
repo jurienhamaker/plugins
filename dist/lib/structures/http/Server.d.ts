@@ -4,6 +4,7 @@ import { Server as HttpServer, ServerOptions as HttpOptions } from 'http';
 import type { ListenOptions } from 'net';
 import { ApiRequest } from '../api/ApiRequest';
 import { ApiResponse } from '../api/ApiResponse';
+import { MediaParserStore } from '../MediaParserStore';
 import { MiddlewareStore } from '../MiddlewareStore';
 import { RouteMatch, RouteStore } from '../RouteStore';
 import { Auth, ServerOptionsAuth } from './Auth';
@@ -32,6 +33,11 @@ export declare class Server extends EventEmitter {
      */
     readonly middlewares: MiddlewareStore;
     /**
+     * The media parsers this server holds.
+     * @since 1.3.0
+     */
+    readonly mediaParsers: MediaParserStore;
+    /**
      * The authentication system.
      * @since 1.0.0
      */
@@ -55,6 +61,40 @@ export declare class Server extends EventEmitter {
     disconnect(): Promise<void>;
 }
 /**
+ * RFC 1341 4: Defines a Content-Type's type, which follows the following structure:
+ *
+ * - `type` = `text` | `multipart` | `message` | `image` | `audio` | `video` | `application` | x-token
+ * - `x-token` = The two characters "X-" followed, with no intervening white space, by any token
+ * @since 1.3.0
+ */
+export declare type ContentTypeType = 'text' | 'multipart' | 'message' | 'image' | 'audio' | 'video' | 'application' | `X-${string}`;
+/**
+ * RFC 1341 4: Defines a Content-Type's parameter, which follows the following structure:
+ *
+ * - `parameter` = `attribute` "=" `value`
+ * - `attribute` = `token`
+ * - `value` = `token` / `quoted-string`
+ * - `token` = 1*<any CHAR except `SPACE`, `CTLs`, or `tspecials`>
+ * - `tspecials` = `(` | `)` | `<` | `>` | `@` | `,` | `;` | `:` | `\` | `"` | `/` | `[` | `]` | `?` | `.` | `=`
+ *
+ * @note `tspecials` must be in quoted-string, to use within parameter values.
+ * @note The definition of `tspecials` is the same as the RFC 822 definition of `specials` with the addition of the
+ * three characters `/`, `?`, and `=`.
+ * @since 1.3.0
+ */
+export declare type ContentTypeParameter = `; ${string}=${string}`;
+/**
+ * RFC 1341 4: Defines the syntax for a Content-Type field without parameters, which follows the following structure:
+ * `type "/" subtype`.
+ */
+export declare type MimeTypeWithoutParameters = `${ContentTypeType}/${string}`;
+/**
+ * RFC 1341 4: Defines the syntax for a Content-Type field, which follows the following structure:
+ * `type "/" subtype *[";" parameter]`.
+ * @since 1.3.0
+ */
+export declare type MimeType = `${MimeTypeWithoutParameters}${'' | ContentTypeParameter}`;
+/**
  * The API options.
  * @since 1.0.0
  */
@@ -77,6 +117,12 @@ export interface ServerOptions {
      * @default 1024 * 1024 * 50
      */
     maximumBodyLength?: number;
+    /**
+     * The accepted content types for this route. If set to null, the route will accept any data.
+     * @since 1.3.0
+     * @default null
+     */
+    acceptedContentMimeTypes?: MimeTypeWithoutParameters[] | null;
     /**
      * The HTTP server options.
      * @since 1.0.0

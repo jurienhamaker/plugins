@@ -14,10 +14,12 @@ class Api extends framework_1.Plugin {
     static [framework_1.postInitialization](options) {
         this.server = new Server_1.Server(options.api);
         this.registerStore(this.server.routes) //
+            .registerStore(this.server.mediaParsers)
             .registerStore(this.server.middlewares);
         this.events.registerPath(path_1.join(__dirname, 'events'));
         this.server.routes.registerPath(path_1.join(__dirname, 'routes'));
         this.server.middlewares.registerPath(path_1.join(__dirname, 'middlewares'));
+        this.server.mediaParsers.registerPath(path_1.join(__dirname, 'mediaParsers'));
     }
     /**
      * @since 1.0.0

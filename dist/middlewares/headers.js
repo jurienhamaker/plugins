@@ -21,7 +21,7 @@ class PluginMiddleware extends Middleware_1.Middleware {
         });
         this.origin = (_a = this.context.server.options.origin) !== null && _a !== void 0 ? _a : '*';
     }
-    run(request, response) {
+    run(request, response, route) {
         response.setHeader('Date', new Date().toUTCString());
         response.setHeader('Access-Control-Allow-Credentials', 'true');
         response.setHeader('Access-Control-Allow-Origin', this.origin);
@@ -33,6 +33,9 @@ class PluginMiddleware extends Middleware_1.Middleware {
         //
         // Due to this method's nature, it is recommended to end the request after setting pre-flight CORS headers.
         if (request.method === 'OPTIONS')
+            response.end();
+        // If there is no route, there is no reason to continue matching other middlewares.
+        else if (route === null)
             response.end();
     }
 }

@@ -6,6 +6,7 @@ const events_1 = require("events");
 const http_1 = require("http");
 const ApiRequest_1 = require("../api/ApiRequest");
 const ApiResponse_1 = require("../api/ApiResponse");
+const MediaParserStore_1 = require("../MediaParserStore");
 const MiddlewareStore_1 = require("../MiddlewareStore");
 const RouteStore_1 = require("../RouteStore");
 const Auth_1 = require("./Auth");
@@ -52,6 +53,16 @@ class Server extends events_1.EventEmitter {
             value: void 0
         });
         /**
+         * The media parsers this server holds.
+         * @since 1.3.0
+         */
+        Object.defineProperty(this, "mediaParsers", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        /**
          * The authentication system.
          * @since 1.0.0
          */
@@ -92,6 +103,7 @@ class Server extends events_1.EventEmitter {
         });
         this.routes = new RouteStore_1.RouteStore();
         this.middlewares = new MiddlewareStore_1.MiddlewareStore();
+        this.mediaParsers = new MediaParserStore_1.MediaParserStore();
         this.auth = Auth_1.Auth.create(auth);
         this.server.on('error', this.emit.bind(this, "error" /* Error */));
         this.server.on('request', this.emit.bind(this, "request" /* Request */));
