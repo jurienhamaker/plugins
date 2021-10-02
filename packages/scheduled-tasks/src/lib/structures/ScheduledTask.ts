@@ -5,7 +5,7 @@ export abstract class ScheduledTask extends Piece {
 	public readonly interval: number | null;
 	public readonly cron: string | null;
 
-	public constructor(context: PieceContext, options: ScheduledTask.Options = {}) {
+	public constructor(context: PieceContext, options: ScheduledTask.Options) {
 		super(context, options);
 		this.interval = options.interval ?? null;
 		this.cron = options.cron ?? null;
@@ -21,10 +21,9 @@ export type SimplePreconditionKeys = {
 	[K in ScheduledTasksKeys]: ScheduledTasks[K] extends never ? K : never;
 }[ScheduledTasksKeys];
 
-export interface ScheduledTaskOptions extends PieceOptions {
-	interval?: number | null;
-	cron?: string | null;
-}
+export type ScheduledTaskOptions =
+	| (PieceOptions & { cron: string } & { interval?: never })
+	| (PieceOptions & { cron?: never } & { interval: number });
 
 export interface ScheduledTaskPayload extends Record<PropertyKey, unknown> {
 	external?: boolean;
