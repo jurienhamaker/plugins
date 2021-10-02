@@ -5,32 +5,20 @@ export abstract class ScheduledTask extends Piece {
 	public readonly interval: number | null;
 	public readonly cron: string | null;
 
-	public constructor(context: PieceContext, options: ScheduledTask.Options) {
+	public constructor(context: PieceContext, options: ScheduledTaskOptions) {
 		super(context, options);
 		this.interval = options.interval ?? null;
 		this.cron = options.cron ?? null;
 	}
 
-	public abstract run(payload: ScheduledTask.Payload): Awaited<unknown>;
+	public abstract run(payload: ScheduledTaskPayload): Awaited<unknown>;
 }
 
 export interface ScheduledTasks {}
 
-export type ScheduledTasksKeys = keyof ScheduledTasks;
-export type SimplePreconditionKeys = {
-	[K in ScheduledTasksKeys]: ScheduledTasks[K] extends never ? K : never;
-}[ScheduledTasksKeys];
-
-export type ScheduledTaskOptions =
-	| (PieceOptions & { cron: string } & { interval?: never })
-	| (PieceOptions & { cron?: never } & { interval: number });
-
-export interface ScheduledTaskPayload extends Record<PropertyKey, unknown> {
-	external?: boolean;
+export interface ScheduledTaskOptions extends PieceOptions {
+	interval?: number | null;
+	cron?: string | null;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace ScheduledTask {
-	export type Options = ScheduledTaskOptions;
-	export type Payload = ScheduledTaskPayload;
-}
+export interface ScheduledTaskPayload extends Record<PropertyKey, unknown> {}
