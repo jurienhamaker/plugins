@@ -25,8 +25,8 @@ export class ScheduledTasksPlugin extends Plugin {
 	/**
 	 * @since 1.0.0
 	 */
-	public static [postLogin](this: SapphireClient): void {
-		container.tasks.createRepeated();
+	public static async [postLogin](this: SapphireClient): Promise<void> {
+		await container.tasks.createRepeated();
 	}
 }
 
