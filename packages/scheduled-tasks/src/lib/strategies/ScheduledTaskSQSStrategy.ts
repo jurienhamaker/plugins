@@ -25,11 +25,11 @@ export class ScheduledTaskSQSStrategy implements ScheduledTaskBaseStrategy {
 
 		const consumer = Consumer.create({
 			...this.options,
-			// eslint-disable-next-line @typescript-eslint/require-await
 			// handleMessage requires a promise method as value. But we don't need to..
-			handleMessage: async (message) => this._handleMessage(message),
 			// eslint-disable-next-line @typescript-eslint/require-await
-			handleMessageBatch: async (messages) => this._handleBatch(messages)
+			handleMessage: async (message) => void this._handleMessage(message),
+			// eslint-disable-next-line @typescript-eslint/require-await
+			handleMessageBatch: async (messages) => void this._handleBatch(messages)
 		});
 		consumer.start();
 	}
