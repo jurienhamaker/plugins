@@ -1,8 +1,8 @@
 import { container, Plugin, postInitialization, postLogin, preGenericsInitialization, SapphireClient } from '@sapphire/framework';
 import type { ClientOptions } from 'discord.js';
+import './index';
 import { ScheduledTaskHandler } from './lib/ScheduledTaskHandler';
 import { ScheduledTaskStore } from './lib/structures/ScheduledTaskStore';
-import type { ScheduledTasksOptions } from './lib/types';
 
 /**
  * @since 1.0.0
@@ -38,15 +38,3 @@ SapphireClient.plugins.registerPreGenericsInitializationHook(
 SapphireClient.plugins.registerPostInitializationHook(ScheduledTasksPlugin[postInitialization], 'Scheduled-Task-PostInitialization');
 
 SapphireClient.plugins.registerPostLoginHook(ScheduledTasksPlugin[postLogin], 'Scheduled-Task-PostLogin');
-
-declare module '@sapphire/pieces' {
-	interface Container {
-		tasks: ScheduledTaskHandler;
-	}
-}
-
-declare module 'discord.js' {
-	export interface ClientOptions {
-		tasks?: ScheduledTasksOptions;
-	}
-}

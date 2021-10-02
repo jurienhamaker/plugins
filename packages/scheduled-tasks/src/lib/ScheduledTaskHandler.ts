@@ -7,12 +7,12 @@ import type { ScheduledTasksOptions, ScheduledTasksTaskOptions, ScheduledTaskStr
 export class ScheduledTaskHandler {
 	public readonly strategy: ScheduledTaskStrategy;
 
-	constructor(options: ScheduledTasksOptions | undefined) {
+	public constructor(options: ScheduledTasksOptions | undefined) {
 		this.strategy = options?.strategy ?? new ScheduledTaskRedisStrategy();
-		this.strategy.connect();
+		void this.strategy.connect();
 	}
 
-	create(task: string, payload: any, options?: ScheduledTasksTaskOptions | number) {
+	public create(task: string, payload: any, options?: ScheduledTasksTaskOptions | number) {
 		if (typeof options === 'number') {
 			options = {
 				type: 'default',
@@ -20,13 +20,13 @@ export class ScheduledTaskHandler {
 			};
 		}
 
-		this.strategy.create(task, payload, options);
+		return this.strategy.create(task, payload, options);
 	}
 
-	createRepeated() {
+	public createRepeated() {
 		const store = this._getStore();
 
-		this.strategy.createRepeated(
+		return this.strategy.createRepeated(
 			store.repeatedTasks.map((piece) => ({
 				name: piece.name,
 				options: {
@@ -41,7 +41,7 @@ export class ScheduledTaskHandler {
 		);
 	}
 
-	run(task: string, payload: any): Awaited<unknown> {
+	public run(task: string, payload: any): Awaited<unknown> {
 		const store = this._getStore();
 		const piece = store.get(task);
 

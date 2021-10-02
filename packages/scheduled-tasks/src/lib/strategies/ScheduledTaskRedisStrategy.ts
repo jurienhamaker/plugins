@@ -1,6 +1,5 @@
 import { container } from '@sapphire/framework';
-import type { Job, JobOptions, Queue, QueueOptions } from 'bull';
-import Bull from 'bull';
+import Bull, { Job, JobOptions, Queue, QueueOptions } from 'bull';
 import type { ScheduledTasks } from '../structures/ScheduledTask';
 import type { ScheduledTaskCreateRepeatedTask, ScheduledTasksTaskOptions } from '../types';
 import type { ScheduledTaskBaseStrategy } from '../types/ScheduledTaskBaseStrategy';
@@ -19,20 +18,20 @@ export class ScheduledTaskRedisStrategy implements ScheduledTaskBaseStrategy {
 	public readonly options: QueueOptions;
 	public readonly queue: string;
 
-	private _client!: Queue;
+	private client!: Queue;
 
-	constructor(options?: ScheduledTaskRedisStrategyOptions) {
+	public constructor(options?: ScheduledTaskRedisStrategyOptions) {
 		this.queue = options?.queue ?? 'scheduled-tasks';
 		this.options = options?.bull ?? {};
 	}
 
 	public async connect() {
-		this._client = new Bull(this.queue, this.options);
-		this._client.process((job: Job<ScheduledTaskRedisStrategyJob>) => this.run(job?.data?.task, job?.data?.payload));
+		this.client = new Bull(this.queue, this.options);
+		await this.client.process((job: Job<ScheduledTaskRedisStrategyJob>) => this.run(job?.data?.task, job?.data?.payload));
 	}
 
 	public create(task: ScheduledTasks, payload?: any, options?: ScheduledTasksTaskOptions) {
-		if (!this._client) {
+		if (!this.client) {
 			return;
 		}
 
@@ -42,15 +41,15 @@ export class ScheduledTaskRedisStrategy implements ScheduledTaskBaseStrategy {
 			bullOptions = {
 				repeat: options?.interval
 					? {
-							every: options?.interval!
+							every: options.interval!
 					  }
 					: {
-							cron: options?.cron!
+							cron: options.cron!
 					  }
 			};
 		}
 
-		this._client.add(
+		return this.client.add(
 			{
 				task,
 				payload
@@ -59,9 +58,9 @@ export class ScheduledTaskRedisStrategy implements ScheduledTaskBaseStrategy {
 		);
 	}
 
-	public createRepeated(tasks: ScheduledTaskCreateRepeatedTask[]) {
-		for (let task of tasks) {
-			this.create(task.name, null, task.options);
+	public async createRepeated(tasks: ScheduledTaskCreateRepeatedTask[]) {
+		for (const task of tasks) {
+			await this.create(task.name, null, task.options);
 		}
 	}
 
