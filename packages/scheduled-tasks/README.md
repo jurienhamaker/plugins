@@ -117,6 +117,7 @@ container.tasks.create('manual', payload, 5000)
 ```
 
 #### Cron task example
+Cron jobs are currently only supported by the Redis strategy.
 
 ##### Creating the Piece:
 ```typescript
