@@ -1,6 +1,5 @@
 import { container } from '@sapphire/framework';
 import Bull, { Job, JobOptions, Queue, QueueOptions } from 'bull';
-import type { ScheduledTasks } from '../structures/ScheduledTask';
 import type { ScheduledTaskCreateRepeatedTask, ScheduledTasksTaskOptions } from '../types';
 import type { ScheduledTaskBaseStrategy } from '../types/ScheduledTaskBaseStrategy';
 
@@ -30,7 +29,7 @@ export class ScheduledTaskRedisStrategy implements ScheduledTaskBaseStrategy {
 		await this.client.process((job: Job<ScheduledTaskRedisStrategyJob>) => this.run(job?.data?.task, job?.data?.payload));
 	}
 
-	public create(task: ScheduledTasks, payload?: any, options?: ScheduledTasksTaskOptions) {
+	public create(task: string, payload?: any, options?: ScheduledTasksTaskOptions) {
 		if (!this.client) {
 			return;
 		}

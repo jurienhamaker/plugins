@@ -1,3 +1,3 @@
-import type { ScheduledTaskRedisStrategy } from '../strategies';
+import type { ScheduledTaskRedisStrategy, ScheduledTaskSQSStrategy } from '../strategies';
 
-export type ScheduledTaskStrategy = ScheduledTaskRedisStrategy;
+export type ScheduledTaskStrategy = ScheduledTaskRedisStrategy | ScheduledTaskSQSStrategy;
