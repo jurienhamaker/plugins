@@ -4,7 +4,7 @@
 
 # @sapphire/plugin-scheduled-tasks
 
-**Plugin for <a href="https://github.com/sapphiredev/framework">@sapphire/framework</a> to create support for scheduled tasks.**
+**Plugin for <a href="https://github.com/sapphiredev/framework">@sapphire/framework</a> to add support for scheduled tasks.**
 
 [![GitHub](https://img.shields.io/github/license/sapphiredev/plugins)](https://github.com/sapphiredev/plugins/blob/main/LICENSE.md)
 [![codecov](https://codecov.io/gh/sapphiredev/plugins/branch/main/graph/badge.svg?token=QWL8FB16BR)](https://codecov.io/gh/sapphiredev/plugins)
@@ -15,10 +15,7 @@
 
 ## Description
 
-A scheduled tasks implementation that can use different strategies like; 
-- Redis
-- SQS
-- etc
+Often bots have features that need to run on periodic schedules such as uploading analytics data, reminders for users, birthdays, scheduled giveaways, undoing moderation actions, and more. There are many ways to achieve this, but as goes with many time-based events they are often spotty at best in their reliability. To make an attempt to save this issue we offer this plugin. You can save your scheduled tasks using different strategies such as Redis and SQS.
 
 ## Features
 
@@ -79,18 +76,18 @@ export class MuteCommand extends Command {
 
 	public async run(message: Message) {
 	    // create a task to unmute the user in 1 hour
-		this.container.tasks.create('unmute', { authorId: Message.author.id }, 60000);
+		this.container.tasks.create('unmute', { authorId: message.author.id }, 60000);
 	}
 }
 ```
 
-## Create a task handler
+### Create a task handler
 
 Scheduled tasks are handled like any other piece. You can create a directory with the name `scheduled-tasks` and add `ScheduledTask` pieces in there.
 
-### Manual task example
+#### Manual task example
 
-#### Piece:
+##### Creating the Piece:
 ```typescript
 import type { PieceContext } from '@sapphire/framework';
 import { ScheduledTask } from '@sapphire/plugin-scheduled-tasks';
@@ -114,14 +111,14 @@ declare module '@sapphire/framework' {
 }
 ```
 
-### Usage
+##### Using Manual task
 ```typescript
 container.tasks.create('manual', payload, 5000)
 ```
 
-### Cron task example
+#### Cron task example
 
-#### Piece:
+##### Creating the Piece:
 ```typescript
 import type { PieceContext } from '@sapphire/framework';
 import { ScheduledTask } from '@sapphire/plugin-scheduled-tasks';
@@ -147,13 +144,13 @@ declare module '@sapphire/framework' {
 
 ```
 
-### Usage
+##### Using Cron tasks
 Cron & Interval tasks are loaded automatically.
 
 
-### Interval task example
+#### Interval task example
 
-#### Piece:
+##### Creating the Piece:
 ```typescript
 import type { PieceContext } from '@sapphire/framework';
 import { ScheduledTask } from '@sapphire/plugin-scheduled-tasks';
@@ -179,10 +176,8 @@ declare module '@sapphire/framework' {
 
 ```
 
-### Usage
+##### Using Interval tasks
 Cron & Interval tasks are loaded automatically.
-
-
 ## Documentation
 
 For the full @sapphire/plugin-scheduled-tasks documentation please refer to the TypeDoc generated [documentation](https://sapphiredev.github.io/plugins/modules/_sapphire_plugin_scheduled_tasks.html).
