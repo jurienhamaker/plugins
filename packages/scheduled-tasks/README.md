@@ -15,12 +15,12 @@
 
 ## Description
 
-Often bots have features that need to run on periodic schedules such as uploading analytics data, reminders for users, birthdays, scheduled giveaways, undoing moderation actions, and more. There are many ways to achieve this, but as goes with many time-based events they are often spotty at best in their reliability. To make an attempt to save this issue we offer this plugin. You can save your scheduled tasks using different strategies such as Redis and SQS.
+Many bots have features that need to run periodically, such as uploading analytics data, reminders for users, birthdays, scheduled giveaways, undoing moderation actions, and more. Several implemented solutions exist for this, but as with many time-based processing attempts, they are often flawed and unreliable. This plugin is our solution, enabling you to schedule tasks and save them in services like Redis and SQS with ease.
 
 ## Features
 
--   Fully ready for TypeScript!
--   Includes ESM ready entrypoint
+-   Full TypeScript support
+-   Includes ESM entrypoint
 
 ## Installation
 
@@ -46,7 +46,7 @@ This registers the necessary options and methods in the Sapphire client to be ab
 import '@sapphire/plugin-scheduled-tasks/register';
 ```
 
-In order to use the scheduled tasks in any place other than a piece (commands, arguments, preconditions, etc.), you must first import the `container` property of `@sapphire/framework`. For pieces, you can simply use `this.container.tasks` to access Scheduled tasks methods.
+In order to use the scheduled tasks anywhere other than a piece (commands, arguments, preconditions, etc.), you must first import the `container` property of `@sapphire/framework`. For pieces, you can simply use `this.container.tasks` to access this plugin's methods.
 
 ```typescript
 import { container } from '@sapphire/framework';
@@ -61,7 +61,7 @@ export class MyAwesomeService {
 Here is an example mute command, demonstrating the use of `this.container.tasks` from within a piece by omitting the explicit import.
 
 ```typescript
-// ping command
+// mute command
 
 import { Command, CommandOptions, PieceContext } from '@sapphire/framework';
 import type { Message } from 'discord.js';
@@ -83,11 +83,12 @@ export class MuteCommand extends Command {
 
 ### Create a task handler
 
-Scheduled tasks are handled like any other piece. You can create a directory with the name `scheduled-tasks` and add `ScheduledTask` pieces in there.
+Scheduled tasks use their own store, like other types of pieces. You can create a directory alongside your commands directory named `scheduled-tasks` and place your tasks there, but they must inherit from `ScheduledTask`, like so.
 
 #### Manual task example
 
 ##### Creating the Piece:
+
 ```typescript
 import type { PieceContext } from '@sapphire/framework';
 import { ScheduledTask } from '@sapphire/plugin-scheduled-tasks';
@@ -100,7 +101,7 @@ export class ManualTask extends ScheduledTask {
 	}
 
 	public async run(payload: ScheduledTask.Payload) {
-		this.container.logger.info('I am ran manually', payload);
+		this.container.logger.info('I ran!', payload);
 	}
 }
 
@@ -111,12 +112,14 @@ declare module '@sapphire/framework' {
 }
 ```
 
-##### Using Manual task
+##### Using Manual Tasks
+
 ```typescript
 container.tasks.create('manual', payload, 5000)
 ```
 
-#### Cron task example
+#### Cron Task Example
+
 Cron jobs are currently only supported by the Redis strategy.
 
 ##### Creating the Piece:
@@ -179,6 +182,7 @@ declare module '@sapphire/framework' {
 
 ##### Using Interval tasks
 Cron & Interval tasks are loaded automatically.
+
 ## Documentation
 
 For the full @sapphire/plugin-scheduled-tasks documentation please refer to the TypeDoc generated [documentation](https://sapphiredev.github.io/plugins/modules/_sapphire_plugin_scheduled_tasks.html).

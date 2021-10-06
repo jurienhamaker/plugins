@@ -39,7 +39,7 @@ export class ScheduledTaskSQSStrategy implements ScheduledTaskBaseStrategy {
 			return;
 		}
 
-		if (options?.cron?.length) {
+		if (options?.cron) {
 			throw new Error('SQS does not support cron notation.');
 		}
 
