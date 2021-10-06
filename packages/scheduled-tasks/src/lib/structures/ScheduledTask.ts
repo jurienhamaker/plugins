@@ -11,7 +11,7 @@ export abstract class ScheduledTask extends Piece {
 		this.cron = options.cron ?? null;
 	}
 
-	public abstract run(payload: ScheduledTaskPayload): Awaited<unknown>;
+	public abstract run(payload: unknown): Awaited<unknown>;
 }
 
 export interface ScheduledTasks {}
@@ -20,5 +20,3 @@ export interface ScheduledTaskOptions extends PieceOptions {
 	interval?: number | null;
 	cron?: string | null;
 }
-
-export interface ScheduledTaskPayload extends Record<PropertyKey, unknown> {}

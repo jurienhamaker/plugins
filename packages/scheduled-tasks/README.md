@@ -48,6 +48,8 @@ import '@sapphire/plugin-scheduled-tasks/register';
 
 In order to use the scheduled tasks anywhere other than a piece (commands, arguments, preconditions, etc.), you must first import the `container` property of `@sapphire/framework`. For pieces, you can simply use `this.container.tasks` to access this plugin's methods.
 
+This is a simple example that creates a task to be run in 2 seconds from a service.
+
 ```typescript
 import { container } from '@sapphire/framework';
 
@@ -67,15 +69,14 @@ import { Command, CommandOptions, PieceContext } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 export class MuteCommand extends Command {
-	public constructor(context: PieceContext, options: CommandOptions) {
+	public constructor(context: PieceContext) {
 		super(context, {
-			...options,
 			description: 'Mute a user'
 		});
 	}
 
 	public async run(message: Message) {
-	    // create a task to unmute the user in 1 hour
+		// create a task to unmute the user in 1 hour
 		this.container.tasks.create('unmute', { authorId: message.author.id }, 60000);
 	}
 }
@@ -94,13 +95,11 @@ import type { PieceContext } from '@sapphire/framework';
 import { ScheduledTask } from '@sapphire/plugin-scheduled-tasks';
 
 export class ManualTask extends ScheduledTask {
-	public constructor(context: PieceContext, options: ScheduledTask.Options) {
-		super(context, {
-			...options
-		});
+	public constructor(context: PieceContext) {
+		super(context);
 	}
 
-	public async run(payload: ScheduledTask.Payload) {
+	public async run(payload: unknown) {
 		this.container.logger.info('I ran!', payload);
 	}
 }
@@ -115,7 +114,7 @@ declare module '@sapphire/framework' {
 ##### Using Manual Tasks
 
 ```typescript
-container.tasks.create('manual', payload, 5000)
+container.tasks.create('manual', payload, 5000);
 ```
 
 #### Cron Task Example
@@ -123,14 +122,14 @@ container.tasks.create('manual', payload, 5000)
 Cron jobs are currently only supported by the Redis strategy.
 
 ##### Creating the Piece:
+
 ```typescript
 import type { PieceContext } from '@sapphire/framework';
 import { ScheduledTask } from '@sapphire/plugin-scheduled-tasks';
 
 export class CronTask extends ScheduledTask {
-	public constructor(context: PieceContext, options: ScheduledTask.Options) {
+	public constructor(context: PieceContext) {
 		super(context, {
-			...options,
 			cron: '00 * * * *'
 		});
 	}
@@ -145,25 +144,24 @@ declare module '@sapphire/framework' {
 		cron: never;
 	}
 }
-
 ```
 
 ##### Using Cron tasks
-Cron & Interval tasks are loaded automatically.
 
+Cron & Interval tasks are loaded automatically.
 
 #### Interval task example
 
 ##### Creating the Piece:
+
 ```typescript
 import type { PieceContext } from '@sapphire/framework';
 import { ScheduledTask } from '@sapphire/plugin-scheduled-tasks';
 
 export class IntervalTask extends ScheduledTask {
-	public constructor(context: PieceContext, options: ScheduledTask.Options) {
+	public constructor(context: PieceContext) {
 		super(context, {
-			...options,
-			interval: (60 * 1000) // 60 seconds
+			interval: 60 * 1000 // 60 seconds
 		});
 	}
 
@@ -177,10 +175,10 @@ declare module '@sapphire/framework' {
 		interval: never;
 	}
 }
-
 ```
 
 ##### Using Interval tasks
+
 Cron & Interval tasks are loaded automatically.
 
 ## Documentation

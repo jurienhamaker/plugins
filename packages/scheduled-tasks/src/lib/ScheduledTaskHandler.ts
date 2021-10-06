@@ -9,10 +9,10 @@ export class ScheduledTaskHandler {
 
 	public constructor(options: ScheduledTasksOptions | undefined) {
 		this.strategy = options?.strategy ?? new ScheduledTaskRedisStrategy();
-		void this.strategy.connect();
+		this.strategy.connect();
 	}
 
-	public create(task: string, payload: any, options?: ScheduledTasksTaskOptions | number) {
+	public create(task: string, payload: unknown, options?: ScheduledTasksTaskOptions | number) {
 		if (typeof options === 'number') {
 			options = {
 				type: 'default',
@@ -41,7 +41,7 @@ export class ScheduledTaskHandler {
 		);
 	}
 
-	public run(task: string, payload: any): Awaited<unknown> {
+	public run(task: string, payload: unknown): Awaited<unknown> {
 		const store = this._getStore();
 		const piece = store.get(task);
 

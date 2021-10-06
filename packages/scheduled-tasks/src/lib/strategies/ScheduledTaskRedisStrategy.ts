@@ -10,7 +10,7 @@ export interface ScheduledTaskRedisStrategyOptions {
 
 export interface ScheduledTaskRedisStrategyJob {
 	task: string;
-	payload?: any;
+	payload?: unknown;
 }
 
 export class ScheduledTaskRedisStrategy implements ScheduledTaskBaseStrategy {
@@ -29,7 +29,7 @@ export class ScheduledTaskRedisStrategy implements ScheduledTaskBaseStrategy {
 		await this.client.process((job: Job<ScheduledTaskRedisStrategyJob>) => this.run(job?.data?.task, job?.data?.payload));
 	}
 
-	public create(task: string, payload?: any, options?: ScheduledTasksTaskOptions) {
+	public create(task: string, payload?: unknown, options?: ScheduledTasksTaskOptions) {
 		if (!this.client) {
 			return;
 		}
@@ -63,7 +63,7 @@ export class ScheduledTaskRedisStrategy implements ScheduledTaskBaseStrategy {
 		}
 	}
 
-	public run(task: string, payload: any) {
+	public run(task: string, payload: unknown) {
 		return container.tasks.run(task, payload);
 	}
 }

@@ -1,5 +1,6 @@
 import { container } from '@sapphire/framework';
 import type { SQS } from 'aws-sdk';
+import { randomBytes } from 'crypto';
 import { Consumer, ConsumerOptions } from 'sqs-consumer';
 import { Producer } from 'sqs-producer';
 import type { ScheduledTaskCreateRepeatedTask, ScheduledTasksTaskOptions } from '../types';
@@ -7,7 +8,7 @@ import type { ScheduledTaskBaseStrategy } from '../types/ScheduledTaskBaseStrate
 
 export interface ScheduledTaskSQSStrategyMessageBody {
 	task: string;
-	payload?: any;
+	payload?: unknown;
 	options: ScheduledTasksTaskOptions;
 }
 
@@ -34,7 +35,7 @@ export class ScheduledTaskSQSStrategy implements ScheduledTaskBaseStrategy {
 		consumer.start();
 	}
 
-	public create(task: string, payload?: any, options?: ScheduledTasksTaskOptions) {
+	public create(task: string, payload?: unknown, options?: ScheduledTasksTaskOptions) {
 		if (!this.producer) {
 			return;
 		}
@@ -49,7 +50,7 @@ export class ScheduledTaskSQSStrategy implements ScheduledTaskBaseStrategy {
 		}
 
 		return this.producer.send({
-			id: `${task}-${Date.now()}`, // need it to be a unique ID'ish
+			id: `${task}-${randomBytes(6)}`, // need it to be a unique ID'ish
 			body: JSON.stringify({
 				task,
 				payload,
@@ -65,7 +66,7 @@ export class ScheduledTaskSQSStrategy implements ScheduledTaskBaseStrategy {
 		}
 	}
 
-	public run(task: string, payload: any) {
+	public run(task: string, payload: unknown) {
 		return container.tasks.run(task, payload);
 	}
 
