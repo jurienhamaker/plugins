@@ -1,5 +1,5 @@
 import { Piece, PieceContext, PieceOptions } from '@sapphire/pieces';
-import type { Awaited } from '@sapphire/utilities';
+import type { Awaitable } from '@sapphire/utilities';
 
 export abstract class ScheduledTask extends Piece {
 	public readonly interval: number | null;
@@ -11,7 +11,7 @@ export abstract class ScheduledTask extends Piece {
 		this.cron = options.cron ?? null;
 	}
 
-	public abstract run(payload: unknown): Awaited<unknown>;
+	public abstract run(payload: unknown): Awaitable<unknown>;
 }
 
 export interface ScheduledTasks {}

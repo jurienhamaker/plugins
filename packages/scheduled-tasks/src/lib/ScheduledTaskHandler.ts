@@ -1,5 +1,5 @@
 import { container } from '@sapphire/framework';
-import type { Awaited } from '@sapphire/utilities';
+import type { Awaitable } from '@sapphire/utilities';
 import { ScheduledTaskRedisStrategy } from './strategies/ScheduledTaskRedisStrategy';
 import { ScheduledTaskStore } from './structures/ScheduledTaskStore';
 import type { ScheduledTasksOptions, ScheduledTasksTaskOptions, ScheduledTaskStrategy } from './types';
@@ -41,7 +41,7 @@ export class ScheduledTaskHandler {
 		);
 	}
 
-	public run(task: string, payload: unknown): Awaited<unknown> {
+	public run(task: string, payload: unknown): Awaitable<unknown> {
 		const store = this._getStore();
 		const piece = store.get(task);
 
