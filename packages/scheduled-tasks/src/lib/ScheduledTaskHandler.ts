@@ -2,14 +2,14 @@ import { container } from '@sapphire/framework';
 import type { Awaitable } from '@sapphire/utilities';
 import { ScheduledTaskRedisStrategy } from './strategies/ScheduledTaskRedisStrategy';
 import { ScheduledTaskStore } from './structures/ScheduledTaskStore';
-import type { ScheduledTasksOptions, ScheduledTasksTaskOptions, ScheduledTaskStrategy } from './types';
+import type { ScheduledTaskBaseStrategy, ScheduledTasksOptions, ScheduledTasksTaskOptions } from './types';
 
 export class ScheduledTaskHandler {
-	public readonly strategy: ScheduledTaskStrategy;
+	public readonly strategy: ScheduledTaskBaseStrategy;
 
 	public constructor(options: ScheduledTasksOptions | undefined) {
 		this.strategy = options?.strategy ?? new ScheduledTaskRedisStrategy();
-		this.strategy.connect();
+		void this.strategy.connect();
 	}
 
 	public create(task: string, payload: unknown, options?: ScheduledTasksTaskOptions | number) {

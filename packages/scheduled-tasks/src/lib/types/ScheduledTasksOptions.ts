@@ -1,5 +1,5 @@
-import type { ScheduledTaskStrategy } from './ScheduledTaskStrategy';
+import type { ScheduledTaskBaseStrategy } from '.';
 
 export interface ScheduledTasksOptions {
-	strategy: ScheduledTaskStrategy;
+	strategy: ScheduledTaskBaseStrategy;
 }
