@@ -28,22 +28,44 @@ Many bots have features that need to run periodically, such as uploading analyti
 
 -   [`@sapphire/framework`](https://www.npmjs.com/package/@sapphire/framework)
 
-You can use the following command to install this package, or replace `npm install` with your package manager of choice.
+In case you want to use bull as your provider:
+-   [`bull`](https://www.npmjs.com/package/bull)
+
+In case you want to use sqs as your provider:
+-   [`sqs-consumer`](https://www.npmjs.com/package/sqs-consumer)
+-   [`sqs-producer`](https://www.npmjs.com/package/sqs-producer)
+
+You can use the following command to install this package with bull, or replace `npm install` with your package manager of choice.
 
 ```sh
-npm install @sapphire/plugin-scheduled-tasks @sapphire/framework
+npm install @sapphire/plugin-scheduled-tasks @sapphire/framework bull
 ```
 
 ---
 
 ## Usage
 
-This registers the necessary options and methods in the Sapphire client to be able to use the log plugin.
+This registers the necessary options and methods in the Sapphire client to be able to use the schedule plugin.
 
 ```typescript
 // Main bot file
 // Be sure to register the plugin before instantiating the client.
-import '@sapphire/plugin-scheduled-tasks/register';
+import { ScheduledTaskRedisStrategy } from '@sapphire/plugin-scheduled-tasks/register-redis';
+
+// Or if you want to use sqs
+import { ScheduledTaskSQSStrategy } '@sapphire/plugin-scheduled-tasks/register-sqs';
+```
+
+Then, you can pass the imported Strategy into the configuration options in your SapphireClient extension class or initializer. This will either be located in your new SapphireClient constructor call, or super in your constructor method if you use an extension class.
+
+```typescript
+{
+	tasks: {
+		strategy: new ScheduledTaskRedisStrategy()
+		//or with sqs
+		strategy: new ScheduledTaskSQSStrategy({/* you can add your SQS options here */}) 
+	}
+}
 ```
 
 In order to use the scheduled tasks anywhere other than a piece (commands, arguments, preconditions, etc.), you must first import the `container` property of `@sapphire/framework`. For pieces, you can simply use `this.container.tasks` to access this plugin's methods.
@@ -76,7 +98,7 @@ export class MuteCommand extends Command {
 	}
 
 	public async run(message: Message) {
-		// create a task to unmute the user in 1 hour
+		// create a task to unmute the user in 1 minute
 		this.container.tasks.create('unmute', { authorId: message.author.id }, 60000);
 	}
 }
